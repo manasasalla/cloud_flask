@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            display: flex;
+          
+            /* max-width: 1200px; */
+            width: 100%;
+            
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-section {
+            flex: 1;
+            background: url('https://affixtheme.com/html/xmee/demo/img/figure/bg29-l-2.jpg') no-repeat center center;
+            background-size: cover;
+        }
+
+        .form-section {
+        
+            flex: 1;
+           padding: 6rem 6rem 0rem 6rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        select, input, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        select:focus, input:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+            outline: none;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-section {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+    <script>
+        // JavaScript function to dynamically update the department dropdown
+        function updateDepartments(collegeSelect) {
+            const departments = {{ colleges | tojson }};
+            const selectedCollege = collegeSelect.value;
+            const departmentDropdown = document.getElementById('department_name');
+
+            // Clear current options
+            departmentDropdown.innerHTML = '<option value="" disabled selected>Select a department</option>';
+
+            // Populate departments based on selected college
+            if (departments[selectedCollege]) {
+                departments[selectedCollege].forEach(department => {
+                    const option = document.createElement('option');
+                    option.value = department;
+                    option.textContent = department;
+                    departmentDropdown.appendChild(option);
+                });
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="image-section"></div>
+        <div class="form-section">
+            <h1>Upload File</h1>
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+                <label for="college_name">College:</label>
+                <select id="college_name" name="college_name" onchange="updateDepartments(this)" required>
+                    <option value="" disabled selected>Select a college</option>
+                    {% for college in colleges %}
+                        <option value="{{ college }}">{{ college }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="department_name">Department:</label>
+                <select id="department_name" name="department_name" required>
+                    <option value="" disabled selected>Select a department</option>
+                </select>
+
+                <label for="file_name">File Name:</label>
+                <input type="text" id="file_name" name="file_name" required>
+
+                <label for="file_content">File Upload:</label>
+                <input type="file" id="file_content" name="file_content" required>
+
+                <button type="submit">Upload</button>
+            </form>
+            {% if message %}
+            <p>{{ message }}</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
