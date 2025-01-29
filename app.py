@@ -8,10 +8,9 @@ from google.auth.transport.requests import Request
 from googleapiclient.http import MediaFileUpload
 import google.auth.exceptions
 from flask_cors import CORS
-CORS(app)
-
 
 app = Flask(__name__)
+CORS(app)  # Move this below app initialization
 
 app.secret_key = 'your-secret-key'
 
