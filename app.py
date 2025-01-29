@@ -26,6 +26,10 @@ CLIENT_SECRETS = {
     }
 }
 
+
+
+
+
 SCOPES = ['https://www.googleapis.com/auth/drive.file']
 
 # Path to store information locally
