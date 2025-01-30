@@ -21,7 +21,7 @@ CLIENT_SECRETS = {
         "token_uri":"https://oauth2.googleapis.com/token",
         "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
         "client_secret":"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",
-        "redirect_uris": ["http://localhost:5051/", "https://cloud-five-topaz.vercel.app"],
+        "redirect_uris": ["http://localhost:5051/", "https://cloud-flask.vercel.app/"],
         "javascript_origins":["https://cloud-flask.vercel.app/","http://localhost:5050","http://127.0.0.1:5050"]
     
 }}
